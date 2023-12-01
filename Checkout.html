@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+  
+  
+  <title>Checkout</title>
+
+
+
+  <nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="Produtos.html">Produtos</a></li>
+
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    <div class="checkout-container">
+    <h1>Checkout</h1>
+
+    
+    <section class="customer-info">
+      <h2>Informações do Cliente</h2>
+      <form>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" required>
+
+       </section>
+
+       <label for="cepInput">(CEP): </label>
+       <input type="text" id="cepInput" placeholder="e.g., 01001000">
+       <button onclick="getAddress()">Aperta para saber seu endereço</button>
+   
+       <div id="result"></div>
+   
+       <script>
+           function getAddress() {
+               const cepInput = document.getElementById('cepInput');
+               const cep = cepInput.value.replace(/\D/g, ''); 
+   
+               if (cep.length !== 8) {
+                   alert(' (CEP).');
+                   return;
+               }
+   
+               const apiUrl = `https://viacep.com.br/ws/${cep}/json/`;
+   
+               fetch(apiUrl)
+                   .then(response => response.json())
+                   .then(data => {
+                       if (data.erro) {
+                           alert('(CEP).');
+                       } else {
+                           const resultDiv = document.getElementById('result');
+                           resultDiv.innerHTML = `
+                               <p><strong>Endereço:</strong> ${data.logradouro}</p>
+                               <p><strong>Bairro:</strong> ${data.bairro}</p>
+                               <p><strong>Localidade:</strong> ${data.localidade}</p>
+                               <p><strong>State:</strong> ${data.uf}</p>
+                           `;
+                       }
+                   })
+                   .catch(error => {
+                       console.error('Error fetching address:', error);
+                       alert('An error occurred while fetching the address. Please try again.');
+                   });
+           }
+       </script>
+
+
+
+
+
+
+
+
+    
+    <section class="cart-items">
+      <h2>Produtos no Carrinho</h2>
+      <ul>
+        <li>Produto 1 - $20.00</li>
+        <li>Produto 2 - $30.00</li>
+       
+      </ul>
+    </section>
+
+   
+    <section class="order-summary">
+      <h2>Resumo do Pedido</h2>
+      <ul>
+        <li>Subtotal: $50.00</li>
+        <li>Frete: $5.00</li>
+        <li><strong>Total: $55.00</strong></li>
+      </ul>
+    </section>
+
+    <!-- Botão de Compra -->
+    <button class="purchase-button"><a href="Compra%20efeituada.html">Finalizar Compra</button>
+  </div>
+</body>
+</html>
